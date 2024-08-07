@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package opentelemetry.proto.trace.v1;
+
+import "opentelemetry/proto/common/v1/common.proto";
+import "opentelemetry/proto/resource/v1/resource.proto";
+
+option go_package = "go.opentelemetry.io/proto/otlp/trace/v1";
+
+package = pb;
+
+service EchoService {
+    rpc Echo(EchoRequest) returns (EchoResponse)
+}
