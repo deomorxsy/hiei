@@ -3,6 +3,16 @@
 # ccr: check container runtime
 #
 
+find_oci() {
+	if command -v podman &>/dev/null; then
+        echo "Using Podman as default OCI high-level runtime"
+        podman push localhost:5000/protogen:latest
+    else
+        echo "Using docker as default OCI high-level runtime"
+		docker push localhost:5000/protogen:latest
+	fi
+}
+
 checker() {
     exists_wgh=$(which podman 2>&1 | grep -o "no" | head -n 1)
     exists_command=$(command -v podman &>/dev/null)
