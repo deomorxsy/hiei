@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := all
 
 PROTOC_VERSION ?= 24.0
-find_oci=$(shell source ./scripts/ccr.sh; find_oci)
+DISTRO_CHECK := $(shell lsb_release -is 2>/dev/null || echo "Unknown")
 
 .PHONY: help
 help: # display available commands
@@ -15,14 +15,23 @@ publish: proto-compile
 
 .PHONY: proto-compile
 proto-compile:
-	. ./scripts/ccr.sh; checker; \
+ifeq ($(DISTRO_CHECK),Arch)
+	@. ./scripts/ccr.sh; checker; \
 	PLATFORM=$(shell uname -m) PROTOC_VERSION=$(PROTOC_VERSION) docker compose -f ./oci-spec/compose.yml build protogen
+else
+	PLATFORM=$(shell uname -m) PROTOC_VERSION=$(PROTOC_VERSION) docker compose -f ./oci-spec/compose.yml build protogen
+endif
+
 	#PLATFORM=$(shell uname -m) PROTOC_VERSION=$(PROTOC_VERSION) docker compose -f ./oci-spec/compose.yml run --rm protogen
 
 .PHONY: docker-config
 docker-config:
-	. ./scripts/ccr.sh; checker; \
+ifeq ($(DISTRO_CHECK),Arch)
+	@. ./scripts/ccr.sh; checker; \
 	PLATFORM=$(shell uname -m) PROTOC_VERSION=$(PROTOC_VERSION) docker compose -f ./oci-spec/compose.yml config
+else
+	PLATFORM=$(shell uname -m) PROTOC_VERSION=$(PROTOC_VERSION) docker compose -f ./oci-spec/compose.yml build protogen
+endif
 
 .PHONY: proto-clean
 proto-clean:
