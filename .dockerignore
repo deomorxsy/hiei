@@ -1,0 +1,7 @@
+pb/*.proto
+
+# other files
+.git
+*.log
+tmp/
+

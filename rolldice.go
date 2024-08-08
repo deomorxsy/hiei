@@ -11,7 +11,7 @@ import (
 func rolldice(w http.ResponseWriter, r *http.Request) {
     roll := 1 + rand.Intn(6)
 
-    respo := strconv.Itoa(roll) + "\n"
+    resp := strconv.Itoa(roll) + "\n"
     if _, err := io.WriteString(w, resp); err != nil {
         log.Printf("Write failed: %v\n", err)
     }

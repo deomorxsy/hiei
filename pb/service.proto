@@ -7,8 +7,7 @@ import "opentelemetry/proto/resource/v1/resource.proto";
 
 option go_package = "go.opentelemetry.io/proto/otlp/trace/v1";
 
-package = pb;
 
 service EchoService {
-    rpc Echo(EchoRequest) returns (EchoResponse)
+    rpc Echo(EchoRequest) returns (EchoResponse);
 }

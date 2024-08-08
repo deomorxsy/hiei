@@ -6,7 +6,9 @@ ARG PROTOC_VERSION
 
 WORKDIR /app
 # copy the go modules manifests
-COPY ["go.mod", "go.sum', "."]
+#COPY ["go.mod", "go.sum", "."]
+COPY ../go.mod .
+COPY ../go.sum .
 
 RUN apt-get update && apt-get install -y unzip
 RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.31.0
@@ -22,12 +24,27 @@ RUN export ZIP=x86_64 && \
 
 RUN go mod download
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+RUN go get && \
+    go mod tidy && \
+    CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
     go build -a -ldflags '-extldflags "-static"' \
     -o hid .
 
+EXPOSE 2112
+EXPOSE 8080
+
+#ENTRYPOINT [/app/hid]
+CMD [/app/hid]
+
 # copy action into a thin image
-FROM gcr.io/distroless/static:latest
+#FROM gcr.io/distroless/static:latest as relay
+FROM alpine:3.18 as relay
 WORKDIR /
-COPY --from=builder /workspace/hid .
-ENTRYPOINT ["/hid"]
+#COPY --from=builder /workspace/hid .
+COPY --from=builder /app/hid .
+
+EXPOSE 2112
+EXPOSE 8080
+
+ENTRYPOINT ["/bin/sh"]
+CMD ["./hid"]
