@@ -4,4 +4,4 @@ pb/*.proto
 .git
 *.log
 tmp/
-
+plot/
