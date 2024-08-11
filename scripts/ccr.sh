@@ -6,10 +6,10 @@
 find_oci() {
 	if command -v podman &>/dev/null; then
         echo "Using Podman as default OCI high-level runtime"
-        podman push localhost:5000/protogen:latest
+        podman push localhost:5000/hiei:latest
     else
         echo "Using docker as default OCI high-level runtime"
-		docker push localhost:5000/protogen:latest
+		docker push localhost:5000/hiei:latest
 	fi
 }
 
