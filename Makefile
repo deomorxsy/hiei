@@ -17,10 +17,10 @@ publish:
 .PHONY: upa
 upa: hiei
  ifeq ($(DISTRO_CHECK),Arch)
-	@. ./scripts/ccr.sh; checker; \
-	docker compose --file ./deploy/compose.yml up
+	. ./scripts/ccr.sh; checker; \
+		docker compose --file ./deploy/compose.yml up hiei
 else
-	docker compose --file ./deploy/compose.yml up
+	docker compose --file ./deploy/compose.yml up hiei
 endif
 
 .PHONY: hiei
