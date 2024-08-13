@@ -11,7 +11,8 @@ all: docker-config hiei publish
 
 .PHONY: publish
 publish:
-	@. ./scripts/ccr.sh && find_oci;
+	docker push localhost:5000/hiei:latest
+	#@. ./scripts/ccr.sh && find_oci;
 
 .PHONY: upa
 upa: hiei
@@ -26,9 +27,9 @@ endif
 hiei:
 ifeq ($(DISTRO_CHECK),Arch)
 	@. ./scripts/ccr.sh; checker; \
-	PLATFORM=$(shell uname -m) PROTOC_VERSION=$(PROTOC_VERSION) docker compose -f ./deploy/compose.yml build hiei
+	PLATFORM=$(shell uname -m) PROTOC_VERSION=$(PROTOC_VERSION) docker compose -f ./deploy/compose.yml --progress=plain build hiei
 else
-	PLATFORM=$(shell uname -m) PROTOC_VERSION=$(PROTOC_VERSION) docker compose -f ./deploy/compose.yml build hiei
+	PLATFORM=$(shell uname -m) PROTOC_VERSION=$(PROTOC_VERSION) docker compose -f ./deploy/compose.yml --progress=plain build hiei
 endif
 
 #PLATFORM=$(shell uname -m) PROTOC_VERSION=$(PROTOC_VERSION) docker compose -f ./deploy/compose.yml run --rm protogen
