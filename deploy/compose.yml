@@ -27,12 +27,12 @@ services:
     #  context: "../"
     image: prom/prometheus:v2.53.2
     container_name: prometheus
-    #healthcheck:
-    #  test: ["CMD", "./scripts/phc.sh"]
-    #  interval: 10s
-    #  timeout: 15s
-    #  retries: 10
-    #  start_period: 40s
+    healthcheck:
+      test: ["CMD", "./scripts/phc.sh"]
+      interval: 10s
+      timeout: 15s
+      retries: 10
+      start_period: 40s
     volumes:
       - ./:/etc/prometheus/
       #- ./deploy/:/etc/prometheus/

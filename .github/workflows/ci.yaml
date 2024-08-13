@@ -35,7 +35,7 @@ jobs:
 
       - name: Retrieve artifact from docker image
         run: |
-          docker run -it --name hiei -d localhost:5000/protogen:latest
+          docker run -it --name hiei -d localhost:5000/hiei:latest
           docker cp hiei:./hid ${{ github.workspace }}/artifacts/
 
       - name: Archive the build artifact
