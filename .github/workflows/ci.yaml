@@ -39,7 +39,7 @@ jobs:
           docker cp hiei:./hid ${{ github.workspace }}/artifacts/
 
       - name: Archive the build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: hiei
           # image size: 18.8MB
