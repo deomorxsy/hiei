@@ -28,7 +28,7 @@ ifeq ($(DISTRO_CHECK),Arch)
 	@. ./scripts/ccr.sh; checker; \
 	PLATFORM=$(shell uname -m) PROTOC_VERSION=$(PROTOC_VERSION) docker compose -f ./deploy/compose.yml build hiei
 else
-	docker compose -f ./deploy/compose.yml build hiei
+	PLATFORM=$(shell uname -m) PROTOC_VERSION=$(PROTOC_VERSION) docker compose -f ./deploy/compose.yml build hiei
 endif
 
 #PLATFORM=$(shell uname -m) PROTOC_VERSION=$(PROTOC_VERSION) docker compose -f ./deploy/compose.yml run --rm protogen
